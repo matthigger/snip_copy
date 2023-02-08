@@ -14,7 +14,7 @@ def test_main():
     shutil.copyfile(file, file_copy)
 
     # call "CLI"
-    args = [str(file_copy), '--cmd-start', '# ?!']
+    args = [str(file_copy), '--cmd', '# ?!']
     main(args=args)
 
     # check that new files are created via CLI

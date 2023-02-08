@@ -9,10 +9,10 @@ description = 'creates copies of a file, snipping away portions of the ' \
 parser = argparse.ArgumentParser(prog='snip_copy',
                                  description=description)
 parser.add_argument('file_in', type=str, help='input file')
-parser.add_argument("--cmd-start", type=str, default='# ?!',
-                    help="regex to indicate start of command (e.g. "
-                         "'snip-start' or 'snip-end')")
-
+parser.add_argument('--cmd', type=str, default='# ?!',
+                    help='regex to indicate start of command (e.g. '
+                         '"snip-start" or "snip-end").  defaults to matching '
+                         'on "#!" and "# !"')
 
 def main(args=None, write_new_file=True):
     """ loads a file, snip copies and optionally writes new file
@@ -33,8 +33,7 @@ def main(args=None, write_new_file=True):
         text = f.read()
 
     # snip and copy to make new files
-    suffix_text_dict = snip_copy(text, cmd_start=args.cmd_start)
-    # todo: (suffix vs stem?)
+    suffix_text_dict = snip_copy(text, regex_cmd=args.cmd)
 
     if write_new_file:
         file_in = pathlib.Path(args.file_in)

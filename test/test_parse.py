@@ -22,7 +22,7 @@ cmd_list_expect = [Command(type='snip-start', line_idx=2, args=['a']),
 
 
 def test_parse():
-    line_list, cmd_list = parse_text(text=text, cmd_start='#!', cmd_split=':')
+    line_list, cmd_list = parse_text(text=text, regex_cmd='#!', split_cmd=':')
 
     assert line_list == line_list_expect
     assert cmd_list == cmd_list_expect

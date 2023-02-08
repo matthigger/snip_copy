@@ -7,13 +7,13 @@ cmd_tuple = SNIP_END, SNIP_START
 Command = namedtuple('Command', ['type', 'line_idx', 'args'])
 
 
-def parse_text(text, cmd_start='# ?!', cmd_split=':'):
+def parse_text(text, regex_cmd='# ?!', split_cmd=':'):
     """ parses all commands found in file
 
     Args:
         text (str): input text
-        cmd_start (str): indicates start of command
-        cmd_split (str): indicates start of command arguments
+        regex_cmd (str): indicates start of command
+        split_cmd (str): indicates start of command arguments
 
     Returns:
         line_list (list): a list of lines which don't contain any commands
@@ -28,7 +28,7 @@ def parse_text(text, cmd_start='# ?!', cmd_split=':'):
     while len(line_list) > line_idx:
         # see if line contains a command
         line = line_list[line_idx]
-        match = re.search(cmd_start, line)
+        match = re.search(regex_cmd, line)
         if match is None:
             # line does not contain command, continue searching
             line_idx += 1
@@ -41,14 +41,14 @@ def parse_text(text, cmd_start='# ?!', cmd_split=':'):
         line = line[match.end():]
 
         # parse & record command
-        n_split = line.count(cmd_split)
+        n_split = line.count(split_cmd)
         if n_split == 0:
             # no arguments given
             cmd = line
             args = None
         elif n_split == 1:
             # arguments given
-            cmd, arg_csv = line.split(cmd_split)
+            cmd, arg_csv = line.split(split_cmd)
             args = [arg.strip() for arg in arg_csv.split(',')]
         else:
             raise SyntaxError('multiple command splits found')

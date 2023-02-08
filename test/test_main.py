@@ -14,12 +14,12 @@ def test_main():
     shutil.copyfile(file, file_copy)
 
     # call "CLI"
-    args = [str(file_copy), '--cmd', '# ?!']
+    args = [str(file_copy), '--cmd', '# ?!', '--split', 'c']
     main(args=args)
 
     # check that new files are created via CLI
-    assert (tmp_dir / 'solution.py').exists()
-    assert (tmp_dir / 'student.py').exists()
+    assert (tmp_dir / 'rubricsolution.py').exists()
+    assert (tmp_dir / 'rubricstudent.py').exists()
 
     # cleanup
     shutil.rmtree(tmp_dir)

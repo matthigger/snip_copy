@@ -10,7 +10,7 @@ for file in folder.glob('*.py'):
 
 
 def test_snip_copy():
-    suffix_text_dict = snip_copy(text_dict['rubric'])
+    stem_text_dict = snip_copy(text_dict['rubric'])
 
-    assert text_dict['solution'] == suffix_text_dict['solution']
-    assert text_dict['student'] == suffix_text_dict['student']
+    assert text_dict['solution'] == stem_text_dict['solution']
+    assert text_dict['student'] == stem_text_dict['student']

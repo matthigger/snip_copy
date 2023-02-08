@@ -11,15 +11,15 @@ def snip_copy(text, **kwargs):
         text (str): text to operate on
 
     Returns:
-        suffix_text_dict (dict): keys are suffixes of different outputs,
-            values are str of text snipped per that suffix
+        stem_text_dict (dict): keys are stem (str) of different outputs,
+            values are str of text snipped per that stem
     """
 
     # extract commands
     line_list, cmd_list = parse_text(text, **kwargs)
 
-    # build list of snip objects (per suffix)
-    suffix_snip_list_dict = defaultdict(list)
+    # build list of snip objects (per stem)
+    stem_snip_list_dict = defaultdict(list)
     for idx in range(0, len(cmd_list), 2):
         cmd_snip_start = cmd_list[idx]
         assert cmd_snip_start.type == SNIP_START, f'non-alternating {SNIP_START} / {SNIP_END}'
@@ -32,16 +32,16 @@ def snip_copy(text, **kwargs):
             # final snip command
             idx_stop = len(line_list)
 
-        # build snipper, add to corresponding suffix
+        # build snipper, add to corresponding stem
         snipper = Snipper(idx_start=cmd_snip_start.line_idx,
                           idx_stop=idx_stop)
-        for suffix in cmd_snip_start.args:
-            suffix_snip_list_dict[suffix].append(snipper)
+        for stem in cmd_snip_start.args:
+            stem_snip_list_dict[stem].append(snipper)
 
-    # apply snips (per suffix)
-    suffix_text_dict = {None: '\n'.join(line_list)}
-    for suffix, snip_list in suffix_snip_list_dict.items():
+    # apply snips (per stem)
+    stem_text_dict = {None: '\n'.join(line_list)}
+    for stem, snip_list in stem_snip_list_dict.items():
         _line_list = Snipper.apply_snip_list(snip_list, line_list)
-        suffix_text_dict[suffix] = '\n'.join(_line_list)
+        stem_text_dict[stem] = '\n'.join(_line_list)
 
-    return suffix_text_dict
+    return stem_text_dict

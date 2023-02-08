@@ -2,3 +2,5 @@
 /todo.txt
 /snip_copy/__pycache__/
 /test/__pycache__/
+/snip_sum_copy.egg-info/
+*.pyc

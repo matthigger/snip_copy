@@ -1,7 +1,7 @@
 import pathlib
 
 import snip_copy
-from snip_copy.ipynb.copy import snip_copy_ipynb
+from snip_copy.ipynb.copy_file import snip_copy_ipynb
 from snip_copy.ipynb.json_ipynb import IPYNB
 
 folder = pathlib.Path(snip_copy.__file__).parents[1] / 'test' / 'ex_hw'

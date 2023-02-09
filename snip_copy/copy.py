@@ -11,8 +11,9 @@ def snip_copy(text, **kwargs):
         text (str): text to operate on
 
     Returns:
-        stem_text_dict (dict): keys are stem (str) of different outputs,
-            values are str of text snipped per that stem
+        stem_text_dict (dict): keys are stem (str) of different outputs, values
+            are str of text snipped per that stem.  includes key None whose
+            text represents original text with all command lines removed
     """
 
     # extract commands

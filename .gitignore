@@ -4,3 +4,5 @@
 /test/__pycache__/
 /snip_sum_copy.egg-info/
 *.pyc
+
+test/ex_hw/.ipynb_checkpoints/

@@ -13,7 +13,7 @@ def add_all_even_idx(x):
     # ! snip-start: student
     x_even = x[::2]
     return sum(x_even)
-    # ! snip-end:
+    # ! snip-end
 
 # ! snip-start: student, solution
 # rubric notes

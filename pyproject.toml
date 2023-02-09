@@ -1,5 +1,5 @@
 [project]
-name = "snip_sum_copy"
+name = "snip_copy"
 version = "0.0.1"
 authors = [
     { name = "Matt Higger", email = "matt.higger@gmail.com" },

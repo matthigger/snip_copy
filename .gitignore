@@ -1,8 +1,7 @@
 /.idea/
 /todo.txt
-/snip_copy/__pycache__/
-/test/__pycache__/
-/snip_sum_copy.egg-info/
+**/__pycache__/
 *.pyc
-
-test/ex_hw/.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+*.egg-info/
+/dist/

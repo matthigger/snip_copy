@@ -2,7 +2,7 @@ import argparse
 import pathlib
 from warnings import warn
 
-from snip_copy.copy import snip_copy
+from snip_copy.copy_file import snip_copy
 
 description = 'creates copies of a file, snipping away portions of the ' \
               'original.  See https://github.com/matthigger/snip_copy'
@@ -20,6 +20,7 @@ parser.add_argument('--split', type=str, default=None,
                          'e.g. if your input file is `hw0_rub.py` you can '
                          'split on "_" to produce `hw0_sol.py` from command '
                          '`#! snip-start: sol`)')
+parser.add_argument('--verbose', action='store_false')
 
 
 def iter_file_out_value(stem_dict, args):
@@ -87,6 +88,9 @@ def main(args=None, write_new_file=True):
             # print text to output
             with open(file_out, 'w') as f:
                 print(text, file=f)
+
+            if args.verbose:
+                print(f'snip-copied: {file_out}')
 
     return stem_text_dict
 

@@ -27,6 +27,9 @@ def main(args=None, write_new_file=True):
         for file_out, ipynb in iter_file_out_value(stem_ipynb_dict, args):
             ipynb.to_file(f_ipynb=file_out)
 
+            if args.verbose:
+                print(f'snip-copied: {file_out}')
+
     return stem_ipynb_dict
 
 

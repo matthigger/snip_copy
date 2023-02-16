@@ -20,7 +20,8 @@ parser.add_argument('--split', type=str, default=None,
                          'e.g. if your input file is `hw0_rub.py` you can '
                          'split on "_" to produce `hw0_sol.py` from command '
                          '`#! snip: sol`)')
-parser.add_argument('--verbose', action='store_false')
+parser.add_argument('--quiet', action='store_true',
+                    help='disables command line output')
 
 
 def iter_file_out_value(stem_dict, args):
@@ -89,7 +90,7 @@ def main(args=None, write_new_file=True):
             with open(file_out, 'w') as f:
                 print(text, file=f)
 
-            if args.verbose:
+            if not args.quiet:
                 print(f'snip-copied: {file_out}')
 
     return stem_text_dict

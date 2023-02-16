@@ -33,7 +33,7 @@ generates two files, `a.txt` and `b.txt` where each has removed the snipped sect
 You can add snip commands to jupyter notebook cells (code or markdown) to achieve similar behavior as well. For example, given input [rubric.ipynb](test/ex_hw/rubric.ipynb), running the following command:
 
 ```
-    $ python3 -m snip_copy.ipynb rubric.ipynb
+    $ python3 -m snip_copy rubric.ipynb
 ```
 
 generates [solution.ipynb](test/ex_hw/solution.ipynb) and [student.ipynb](test/ex_hw/student.ipynb).

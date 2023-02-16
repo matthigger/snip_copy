@@ -4,17 +4,24 @@ from .parse import parse_text, SNIP_START, SNIP_END
 from .snip import Snipper
 
 
-def snip_copy(text, **kwargs):
+def snip_copy(text=None, file=None, **kwargs):
     """ returns copies of text with sections snipped out
 
     Args:
         text (str): text to operate on
+        file (str): file to load
 
     Returns:
         stem_text_dict (dict): keys are stem (str) of different outputs, values
             are str of text snipped per that stem.  includes key None whose
             text represents original text with all command lines removed
     """
+    assert (text is None) != (file is None), 'text xor file required'
+
+    if text is None:
+        # read in text file
+        with open(file) as f:
+            text = f.read()
 
     # extract commands
     line_list, cmd_list = parse_text(text, **kwargs)
@@ -27,7 +34,8 @@ def snip_copy(text, **kwargs):
 
         if idx + 1 < len(cmd_list):
             # another command exists in pair (should be snip end)
-            assert cmd_list[idx + 1].type == SNIP_END
+            s = '\n'.join([str(c) for c in cmd_list])
+            assert cmd_list[idx + 1].type == SNIP_END, s
             idx_stop = cmd_list[idx + 1].line_idx
         else:
             # final snip command

@@ -3,6 +3,7 @@ import pathlib
 from warnings import warn
 
 from snip_copy.copy_file import snip_copy
+from snip_copy.ipynb import IPYNB, snip_copy_ipynb
 
 description = 'creates copies of a file, snipping away portions of the ' \
               'original.  See https://github.com/matthigger/snip_copy'
@@ -11,7 +12,7 @@ parser = argparse.ArgumentParser(prog='snip_copy',
 parser.add_argument('file_in', type=str, help='input file')
 parser.add_argument('--cmd', type=str, default='# ?!',
                     help='regex to indicate start of command (e.g. '
-                         '"snip-start" or "snip-end").  defaults to matching '
+                         '"snip" or "snip-end").  defaults to matching '
                          'on "#!" and "# !"')
 parser.add_argument('--split', type=str, default=None,
                     help='if passed, gives copies of file, keeping all of '
@@ -19,8 +20,9 @@ parser.add_argument('--split', type=str, default=None,
                          'remaining filename is given by stem argument. ('
                          'e.g. if your input file is `hw0_rub.py` you can '
                          'split on "_" to produce `hw0_sol.py` from command '
-                         '`#! snip-start: sol`)')
-parser.add_argument('--verbose', action='store_false')
+                         '`#! snip: sol`)')
+parser.add_argument('--quiet', action='store_true',
+                    help='disables command line output')
 
 
 def iter_file_out_value(stem_dict, args):
@@ -65,34 +67,40 @@ def iter_file_out_value(stem_dict, args):
 def main(args=None, write_new_file=True):
     """ loads a file, snip copies and optionally writes new file
 
-    (this fnc allows us to test)
     Args:
-        args: mimics sys.argv, defaults to actually using sys.argv
+        args (list): mimics sys.argv, defaults to actually using sys.argv
         write_new_file (bool): if True, writes new file
 
     Returns:
         stem_text_dict (dict): keys are stem (str) of different outputs,
             values are str of text snipped per that stem
     """
+    # parse input arguments
     args = parser.parse_args(args=args)
 
-    # read in file
-    with open(args.file_in) as f:
-        text = f.read()
-
     # snip and copy to make new files
-    stem_text_dict = snip_copy(text, regex_cmd=args.cmd)
+    if args.file_in.endswith('ipynb'):
+        _snip_copy = snip_copy_ipynb
+    else:
+        _snip_copy = snip_copy
+    stem_out_dict = _snip_copy(file=args.file_in, regex_cmd=args.cmd)
 
     if write_new_file:
-        for file_out, text in iter_file_out_value(stem_text_dict, args):
-            # print text to output
-            with open(file_out, 'w') as f:
-                print(text, file=f)
+        for file_out, out in iter_file_out_value(stem_out_dict, args):
+            # write output to file
+            if isinstance(out, IPYNB):
+                out.to_file(file_out)
+            elif isinstance(out, str):
+                with open(file_out, 'w') as f:
+                    print(out, file=f)
+            else:
+                raise TypeError(f'output not writeable: {out}')
 
-            if args.verbose:
+            # print msg to user (if not in quiet mode)
+            if not args.quiet:
                 print(f'snip-copied: {file_out}')
 
-    return stem_text_dict
+    return stem_out_dict
 
 
 if __name__ == '__main__':

@@ -7,21 +7,24 @@ from snip_copy.__main__ import main
 
 
 def test_main():
-    # build temp directory, load in an example file
-    tmp_dir = pathlib.Path(tempfile.TemporaryDirectory().name)
-    tmp_dir.mkdir()
-    file = pathlib.Path(snip_copy.__file__).parents[1] / 'test' / 'ex_hw' / \
-           'rubric.py'
-    file_copy = tmp_dir / file.name
-    shutil.copyfile(file, file_copy)
+    ex_hw_folder = pathlib.Path(snip_copy.__file__).parents[1] / 'test' / 'ex_hw'
+    file_list = [ex_hw_folder / 'rubric.py',
+                 ex_hw_folder / 'rubric.ipynb']
 
-    # call "CLI"
-    args = [str(file_copy), '--cmd', '# ?!', '--split', 'c']
-    main(args=args)
+    for file in file_list:
+        # build temp directory, load in an example file
+        tmp_dir = pathlib.Path(tempfile.TemporaryDirectory().name)
+        tmp_dir.mkdir()
+        file_copy = tmp_dir / file.name
+        shutil.copyfile(file, file_copy)
 
-    # check that new files are created via CLI
-    assert (tmp_dir / 'rubricsolution.py').exists()
-    assert (tmp_dir / 'rubricstudent.py').exists()
+        # call "CLI"
+        args = [str(file_copy), '--cmd', '# ?!', '--split', 'c']
+        main(args=args)
 
-    # cleanup
-    shutil.rmtree(tmp_dir)
+        # check that new files are created via CLI
+        assert file_copy.with_stem('rubricsolution').exists()
+        assert file_copy.with_stem('rubricstudent').exists()
+
+        # cleanup
+        shutil.rmtree(tmp_dir)

@@ -14,7 +14,7 @@ Consider an example input file `input.txt`:
 
     this text will be left unmodified in all copies
 
-    #! snip-start: a, b
+    #! snip: a, b
     this text will be removed in copies a and b
     #! snip-end
 
@@ -33,14 +33,14 @@ generates two files, `a.txt` and `b.txt` where each has removed the snipped sect
 You can add snip commands to jupyter notebook cells (code or markdown) to achieve similar behavior as well. For example, given input [rubric.ipynb](test/ex_hw/rubric.ipynb), running the following command:
 
 ```
-    $ python3 -m snip_copy.ipynb rubric.ipynb
+    $ python3 -m snip_copy rubric.ipynb
 ```
 
 generates [solution.ipynb](test/ex_hw/solution.ipynb) and [student.ipynb](test/ex_hw/student.ipynb).
 
 ## Notes:
 
-- a copy is made for each item which appears in a comma separated list after any `snip-start` command in the entire document
+- a copy is made for each item which appears in a comma separated list after any `snip` command in the entire document
 - snip commands are removed in all copies created
 - Each snip command line contains `#!`, which comments out the line, so it may live unobtrusively in python code. You can modify this string to produce similar behavior in another programming language:
 
@@ -48,7 +48,7 @@ generates [solution.ipynb](test/ex_hw/solution.ipynb) and [student.ipynb](test/e
     $ python3 -m snip_copy input.txt --cmd '// !'
 ```
 
-- It can be cumbersome to type the full names of every output file with every `snip-start` command. Consider using `--split`:
+- It can be cumbersome to type the full names of every output file with every `snip` command. Consider using `--split`:
 
 ```
     $ python3 -m snip_copy hw_rub.txt --split '_'
@@ -60,7 +60,7 @@ generates [solution.ipynb](test/ex_hw/solution.ipynb) and [student.ipynb](test/e
 - if a cell's snip command would remove its entire contents, then we remove the cell entirely in the copy generated, rather than give a cell which is empty
 - You can call `snip_copy` from within jupyter via a code containing: 
 ```
->>> #! snip-start: stud, sol
+>>> #! snip: stud, sol
 >>> !python3 -m snip_copy hw_rub.ipynb`
 ```
   which will make copies, removing this cell from each copy.

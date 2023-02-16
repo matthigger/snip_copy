@@ -1,15 +1,23 @@
 from snip_copy.copy_file import snip_copy
+from .json_ipynb import IPYNB
 
 
-def snip_copy_ipynb(ipynb, **kwargs):
+def snip_copy_ipynb(ipynb=None, file=None, **kwargs):
     """ returns copies of ipynb (json_dict) with sections snipped out
 
     Args:
         ipynb (IPYNB): input jupyter notebook
+        file (str): path to an ipynb notebook
 
     Returns:
         stem_ipynb_dict (dict): keys are stems (str).  values ipynb objects
     """
+    assert (ipynb is None) != (file is None), 'either ipynb xor file required'
+
+    if ipynb is None:
+        # load ipynb from file
+        ipynb = IPYNB.from_file(f_ipynb=file)
+
     # contains a stem_text_dict corresponding to each cell
     stem_text_dict_list = [snip_copy(text, **kwargs) for text in ipynb.text_list]
 

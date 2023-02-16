@@ -1,7 +1,7 @@
 from collections import namedtuple
 import re
 
-SNIP_START = 'snip-start'
+SNIP_START = 'snip'
 SNIP_END = 'snip-end'
 cmd_tuple = SNIP_END, SNIP_START
 Command = namedtuple('Command', ['type', 'line_idx', 'args'])
@@ -38,22 +38,22 @@ def parse_text(text, regex_cmd='# ?!', split_cmd=':'):
         line_list.pop(line_idx)
 
         # keep only what remains after cmd_start in line
-        line = line[match.end():]
+        _line = line[match.end():]
 
         # parse & record command
-        n_split = line.count(split_cmd)
+        n_split = _line.count(split_cmd)
         if n_split == 0:
             # no arguments given
-            cmd = line
+            cmd = _line
             args = None
         elif n_split == 1:
             # arguments given
-            cmd, arg_csv = line.split(split_cmd)
+            cmd, arg_csv = _line.split(split_cmd)
             args = [arg.strip() for arg in arg_csv.split(',')]
         else:
             raise SyntaxError('multiple command splits found')
         cmd = cmd.strip()
-        assert cmd in cmd_tuple, f'invalid command: {cmd}'
+        assert cmd in cmd_tuple, f'invalid command found on line {line_idx}: {line}'
         cmd_list.append(Command(type=cmd,
                                 line_idx=line_idx,
                                 args=args))

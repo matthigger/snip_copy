@@ -1,4 +1,4 @@
-from snip_copy.copy import snip_copy
+from snip_copy.copy_file import snip_copy
 
 
 def snip_copy_ipynb(ipynb, **kwargs):

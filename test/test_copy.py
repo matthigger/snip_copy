@@ -1,6 +1,6 @@
 import pathlib
 
-from snip_copy.copy import *
+from snip_copy.copy_file import *
 
 folder = pathlib.Path('.') / 'ex_hw'
 text_dict = dict()

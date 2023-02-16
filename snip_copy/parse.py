@@ -1,7 +1,7 @@
 from collections import namedtuple
 import re
 
-SNIP_START = 'snip-start'
+SNIP_START = 'snip'
 SNIP_END = 'snip-end'
 cmd_tuple = SNIP_END, SNIP_START
 Command = namedtuple('Command', ['type', 'line_idx', 'args'])

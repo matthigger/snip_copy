@@ -10,12 +10,12 @@ def add_all_even_idx(x):
         x_even_sum: sum
     """
 
-    # ! snip-start: student
+    # ! snip: student
     x_even = x[::2]
     return sum(x_even)
     # ! snip-end
 
-# ! snip-start: student, solution
+# ! snip: student, solution
 # rubric notes
 # 100 pts for documentation
 # 1 pts for function which works

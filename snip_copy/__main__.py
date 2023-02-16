@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser(prog='snip_copy',
 parser.add_argument('file_in', type=str, help='input file')
 parser.add_argument('--cmd', type=str, default='# ?!',
                     help='regex to indicate start of command (e.g. '
-                         '"snip-start" or "snip-end").  defaults to matching '
+                         '"snip" or "snip-end").  defaults to matching '
                          'on "#!" and "# !"')
 parser.add_argument('--split', type=str, default=None,
                     help='if passed, gives copies of file, keeping all of '
@@ -19,7 +19,7 @@ parser.add_argument('--split', type=str, default=None,
                          'remaining filename is given by stem argument. ('
                          'e.g. if your input file is `hw0_rub.py` you can '
                          'split on "_" to produce `hw0_sol.py` from command '
-                         '`#! snip-start: sol`)')
+                         '`#! snip: sol`)')
 parser.add_argument('--verbose', action='store_false')
 
 

@@ -10,18 +10,18 @@ description = 'creates copies of a file, snipping away portions of the ' \
 parser = argparse.ArgumentParser(prog='snip_copy',
                                  description=description)
 parser.add_argument('file_in', type=str, help='input file')
-parser.add_argument('--cmd', type=str, default='# ?!',
+parser.add_argument('-c', '--cmd', type=str, default='# ?!',
                     help='regex to indicate start of command (e.g. '
                          '"snip" or "snip-end").  defaults to matching '
                          'on "#!" and "# !"')
-parser.add_argument('--split', type=str, default=None,
+parser.add_argument('-s', '--split', type=str, default=None,
                     help='if passed, gives copies of file, keeping all of '
                          'the file name before 1st occurrence of split.  the '
                          'remaining filename is given by stem argument. ('
                          'e.g. if your input file is `hw0_rub.py` you can '
                          'split on "_" to produce `hw0_sol.py` from command '
                          '`#! snip: sol`)')
-parser.add_argument('--quiet', action='store_true',
+parser.add_argument('-q', '--quiet', action='store_true',
                     help='disables command line output')
 
 
